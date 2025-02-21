@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}
+
+.code-editor {
+  @apply font-mono text-sm;
+}
+
+.analysis-result {
+  @apply bg-white shadow-lg rounded-lg p-6;
+}
+
+.upload-zone {
+  @apply border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors;
+}
