@@ -36,8 +36,8 @@ Developers can interact with the platform through a user-friendly web interface,
 Future Enhancements:
 Future updates will include advanced AI models, expanded language support, and more robust optimization techniques.
 
-Create a '.env' file to start the project :
+Create a ''.env'' file to start the project :
 - add { Gemini API Key }
 
 To start project use :
-'npm run dev'
+''npm run dev''
