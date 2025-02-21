@@ -7,11 +7,9 @@ import multer from "multer";
 import { analyzeCodeWithGemini } from "./services/gemini";
 import { recognizeHandwriting } from "./services/pytorch";
 
-// Configure multer for memory storage
 const upload = multer({ storage: multer.memoryStorage() });
 
 export async function registerRoutes(app: Express) {
-  // Get all analyses
   app.get("/api/analyses", async (_req, res) => {
     try {
       const analyses = await storage.getRecentAnalyses();
@@ -21,8 +19,6 @@ export async function registerRoutes(app: Express) {
       res.status(500).json({ error: "Failed to fetch analyses" });
     }
   });
-
-  // Analyze code
   app.post("/api/analyze", async (req, res) => {
     try {
       const { code, language } = insertCodeAnalysisSchema.parse({
@@ -50,7 +46,6 @@ export async function registerRoutes(app: Express) {
     }
   });
 
-  // Upload and process file
   app.post("/api/upload", upload.single("file"), async (req, res) => {
     try {
       if (!req.file) {
@@ -58,17 +53,13 @@ export async function registerRoutes(app: Express) {
       }
 
       let code = "";
-      let language = "python"; // Default language
+      let language = "python"; 
 
-      // If it's an image, use OCR
       if (req.file.mimetype.startsWith("image/")) {
         const imageBase64 = req.file.buffer.toString("base64");
         code = await recognizeHandwriting(imageBase64);
       } else {
-        // For code files, read directly
         code = req.file.buffer.toString("utf-8");
-
-        // Detect language from file extension
         const extension = req.file.originalname.split(".").pop()?.toLowerCase();
         switch (extension) {
           case "js":
