@@ -28,7 +28,6 @@ export async function recognizeHandwriting(imageBase64: string): Promise<string>
       }
     });
 
-    // Send the base64 image to the Python script
     pythonProcess.stdin.write(imageBase64);
     pythonProcess.stdin.end();
   });
