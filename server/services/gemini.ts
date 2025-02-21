@@ -52,21 +52,13 @@ ${code}
   try {
     const result = await model.generateContent(prompt);
     let responseText = result.response.text().trim();
-
-    // Remove JSON formatting if present
     responseText = responseText.replace(/```json|```/g, "").trim();
-
-    // Clean the response text
     let jsonText = responseText;
     jsonText = jsonText.replace(/^JSON\s*{/, '{');
-
-    // Remove any non-JSON text before the first {
     const firstBrace = jsonText.indexOf('{');
     if (firstBrace >= 0) {
       jsonText = jsonText.substring(firstBrace);
     }
-
-    // Remove any text after the last }
     const lastBrace = jsonText.lastIndexOf('}');
     if (lastBrace >= 0) {
       jsonText = jsonText.substring(0, lastBrace + 1);
@@ -79,8 +71,6 @@ ${code}
     } catch (parseError) {
       console.error("Failed to parse Gemini response:", parseError);
       console.error("Cleaned response text:", jsonText);
-
-      // Return a structured error response
       return {
         metrics: {
           cyclomaticComplexity: 0,
